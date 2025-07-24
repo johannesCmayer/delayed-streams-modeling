@@ -38,6 +38,7 @@
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell rec {
           packages = with pkgs; [
+<<<<<<< HEAD
             # python3
             stdenv.cc.cc.lib
             portaudio
@@ -45,6 +46,12 @@
             uv
             rustToolchain
             cmake
+=======
+            uv
+            libxcrypt
+            portaudio
+            rustToolchain
+>>>>>>> origin/main
             openssl
             pkg-config
             cargo-deny
@@ -54,7 +61,10 @@
             cudaPackages.cudatoolkit 
             opusfile
             libz
+<<<<<<< HEAD
             glibc
+=======
+>>>>>>> origin/main
           ];
 
           env = {
@@ -63,6 +73,7 @@
           };
 
           shellHook = ''
+<<<<<<< HEAD
             echo "Setup python with uv"
             ${pkgs.uv}/bin/uv python install 3.12
             ${pkgs.uv}/bin/uv sync
@@ -74,6 +85,10 @@
 
             # For moshi see: https://github.com/kyutai-labs/unmute/blob/main/dockerless/start_tts.sh
             export CXXFLAGS="-include cstdint"
+=======
+            export LD_LIBRARY_PATH=/run/opengl-driver/lib:${pkgs.lib.makeLibraryPath packages}:"$LD_LIBRARY_PATH"
+            export CUDA_ROOT=${pkgs.cudaPackages.cudatoolkit}
+>>>>>>> origin/main
           '';
         };
       });
