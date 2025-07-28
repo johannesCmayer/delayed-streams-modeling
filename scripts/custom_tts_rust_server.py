@@ -71,16 +71,17 @@ async def output_audio(out: str, output_queue: asyncio.Queue[np.ndarray | None])
         import subprocess
 
         ffplay_cmd = [
-          "ffplay",
-          "-f", "f32le",  # 32-bit float little-endian
-          "-ar", str(SAMPLE_RATE),  # sample rate
-          "-af", f"atempo={VOICE_SPEED}",  # 2x speed with pitch preservation
-          "-probesize", "32",  # small probe size
-          "-autoexit",  # exit when input ends
-          "-nodisp",  # no video display
-          "-"  # read from stdin
+          "mpv",
+          "--no-video",
+          "--demuxer=rawaudio",
+          "--demuxer-rawaudio-rate=24000", 
+          "--demuxer-rawaudio-channels=1",
+          "--demuxer-rawaudio-format=floatle",
+          f"--speed={VOICE_SPEED}",
+          "--input-media-keys=yes",
+          "-"
         ]
-        
+       
         process = subprocess.Popen(
             ffplay_cmd,
             stdin=subprocess.PIPE,
